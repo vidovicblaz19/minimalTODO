@@ -1,0 +1,2 @@
+import { registerFileSystemWatcher, registerOnDidChangeVisibleTextEditorsWatcher, registerOnDidChangeWorkspaceFoldersWatcher, registerOnDidSaveTextDocumentWatcher } from "./file-system-watcher";
+export { registerFileSystemWatcher, registerOnDidChangeVisibleTextEditorsWatcher, registerOnDidChangeWorkspaceFoldersWatcher, registerOnDidSaveTextDocumentWatcher };

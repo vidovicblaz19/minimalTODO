@@ -1,0 +1,159 @@
+{
+  "name": "minimaltodo",
+  "displayName": "minimalTODO",
+  "description": "TODO utility keeping track of todos in your files.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "minimalTODO",
+      "properties": {
+        "minimaltodo.general.todoIdentifiers": {
+          "type": "array",
+          "default": [
+            "TODO"
+          ],
+          "description": "Words that help identify todo lines. Example: [\"TODO\", ...],"
+        },
+        "minimaltodo.general.warningIdentifiers": {
+          "type": "array",
+          "default": [],
+          "description": "Words that help identify odd lines we wish to keep an eye on. Example: [\"it.only\", \"describe.only\", ...]"
+        },
+        "minimaltodo.general.descriptionMaxLength": {
+          "type": "number",
+          "default": 128,
+          "description": "Max length of lines."
+        },
+        "minimaltodo.general.ViewMode": {
+          "type": "string",
+          "enum": [
+            "TreeView",
+            "ListView"
+          ],
+          "default": "TreeView",
+          "description": "Prefered way to display todo items."
+        },
+        "minimaltodo.general.ScanMode": {
+          "type": "string",
+          "enum": [
+            "Current_File",
+            "Workspace_Files",
+            "Modified_Files"
+          ],
+          "default": "Workspace_Files",
+          "description": "Prefered way to scan files."
+        },
+        "minimaltodo.general.gitModifiedIncludeUntracked": {
+          "type": "boolean",
+          "default": false,
+          "description": "Select if \"Scan modified files\" option includes untracked files."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "minimaltodo.scanmode.Current_File",
+        "title": "Scan current file"
+      },
+      {
+        "command": "minimaltodo.scanmode.Workspace_Files",
+        "title": "Scan workspace files"
+      },
+      {
+        "command": "minimaltodo.scanmode.Modified_Files",
+        "title": "Scan modified files"
+      },
+      {
+        "command": "minimaltodo.toggleViewMode",
+        "title": "Toggle view",
+        "icon": "$(list-tree)"
+      }
+    ],
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "minimal-todo",
+          "title": "TODO",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "views": {
+      "minimal-todo": [
+        {
+          "id": "minimaltodo-view",
+          "name": ""
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "submenu": "minimaltodo.scanmode",
+          "when": "view.minimaltodo-view.visible",
+          "group": "navigation"
+        },
+        {
+          "command": "minimaltodo.toggleViewMode",
+          "when": "view.minimaltodo-view.visible",
+          "group": "navigation"
+        }
+      ],
+      "minimaltodo.scanmode": [
+        {
+          "command": "minimaltodo.scanmode.Current_File",
+          "group": "minimaltodo.scanmode"
+        },
+        {
+          "command": "minimaltodo.scanmode.Workspace_Files",
+          "group": "minimaltodo.scanmode"
+        },
+        {
+          "command": "minimaltodo.scanmode.Modified_Files",
+          "group": "minimaltodo.scanmode"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "minimaltodo.scanmode",
+        "label": "Scan Mode",
+        "icon": "$(search-view-icon)"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.73.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@vscode/ripgrep": "^1.14.2"
+  }
+}
