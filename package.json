@@ -55,7 +55,7 @@
         },
         "minimaltodo.general.gitModifiedIncludeUntracked": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Select if \"Scan modified files\" option includes untracked files."
         }
       }
@@ -84,7 +84,7 @@
         {
           "id": "minimal-todo",
           "title": "TODO",
-          "icon": "$(checklist)"
+          "icon": "resources/minimaltodo-icon.png"
         }
       ]
     },
