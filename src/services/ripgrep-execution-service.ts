@@ -15,8 +15,8 @@ export class RipgrepService {
     }
 
     private findGitModifiedFiles(cwd:string): string[] {
-        const includeUntracked = (this.extensionStateStore.gitModifiedIncludeUntracked) ? '-o' : '';
-        const git = spawnSync('git',['ls-files', '-m', includeUntracked],{cwd, encoding:'utf-8'});
+        const includeUntracked = (this.extensionStateStore.gitModifiedIncludeUntracked) ? '-o' : '--';
+        const git = spawnSync('git',['ls-files', '--exclude-standard', '-m', includeUntracked],{cwd, encoding:'utf-8', maxBuffer: 2000*1024});
         if(git.status !== 0) { return ['-g']; }
         return getLines(git.stdout).flatMap((line) => (['-g',`${line}`]));
     }
@@ -24,7 +24,7 @@ export class RipgrepService {
     public findMatches(dir: string): IRipgrepSanitizedMatch[] {
         const cwd = path.normalize(dir);
         const specificFileSearch = (this.extensionStateStore.scanMode === 'Modified_Files') ? this.findGitModifiedFiles(cwd) : [];
-        const rgSettings:SpawnSyncOptionsWithStringEncoding = { encoding: 'utf-8'};
+        const rgSettings:SpawnSyncOptionsWithStringEncoding = { encoding:'utf-8', maxBuffer: 2000*1024 };
         rgSettings.cwd = (this.extensionStateStore.scanMode !== 'Current_File') ? cwd : undefined;
 
         const ripgrep = spawnSync(rgPath, [...this._options, ...specificFileSearch, '--', this._regexPattern, cwd ], rgSettings);

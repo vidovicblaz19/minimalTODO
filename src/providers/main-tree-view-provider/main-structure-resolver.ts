@@ -2,7 +2,7 @@ import path = require('path');
 import * as vscode from 'vscode';
 import { IRipgrepSanitizedMatch } from '../../interfaces-and-types.ts/execution-interfaces';
 import { RipgrepService } from "../../services/ripgrep-execution-service";
-import { ExtensionStateStore } from "../../store/extension-state-store";
+import { ExtensionStateStore, SettingScanMode } from "../../store/extension-state-store";
 import { MainTreeviewProvider } from './main-tree-view-provider';
 import { DirectoryTreeItem, FileTreeItem, LeafTreeItem, TreeItem } from "./tree-items/tree-item-manager";
 
@@ -97,8 +97,15 @@ export class MainStructureResolver {
     }
 
     private setBadgeTaskCount(){
+        const scanModeMapper: { [key in SettingScanMode]: string; } = {
+            Workspace_Files: 'Scan workspace files',
+            Current_File: 'Scan current file',
+            Modified_Files: 'Scan modified files'
+
+        }
+
         this.mainTreeview.badge = { 
-            tooltip: this.extensionStateStore.scanMode,
+            tooltip: scanModeMapper[this.extensionStateStore.scanMode],
             value: this._treeviewComputed.flat().length,
         };
     }
