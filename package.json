@@ -3,6 +3,12 @@
   "displayName": "minimalTODO",
   "description": "TODO utility that keeps track of todos in your files.",
   "version": "1.0.0",
+  "publisher": "vidovichb",
+  "license": "MIT",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/vidovichb/minimalTODO"
+	},
   "engines": {
     "vscode": "^1.73.0"
   },
