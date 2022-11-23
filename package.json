@@ -1,8 +1,8 @@
 {
   "name": "minimaltodo",
   "displayName": "minimalTODO",
-  "description": "TODO utility keeping track of todos in your files.",
-  "version": "0.0.1",
+  "description": "TODO utility that keeps track of todos in your files.",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.73.0"
   },
@@ -20,7 +20,8 @@
         "minimaltodo.general.todoIdentifiers": {
           "type": "array",
           "default": [
-            "TODO"
+            "//TODO",
+            "//Todo"
           ],
           "description": "Words that help identify todo lines. Example: [\"TODO\", ...],"
         },
