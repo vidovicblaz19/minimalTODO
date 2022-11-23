@@ -2,11 +2,15 @@
 
 MinimalTODO is a utility that keeps an eye on TODO items in your project. It can also keep an eye on other user defined words. They can be placed under \<warning> label. Use cases for this are words that get used during development such as "debugger;" or "it.only".
 
+## Install
+
+
+* vscode extension marketplace https://marketplace.visualstudio.com/items?itemName=vidovichb.minimaltodo
+
 ## Features
 
-**Quick features overview**
+![feature-demo](preview/minimalTODO-demo.gif)
 
-https://user-images.githubusercontent.com/44241490/203454247-2d7f717e-de4d-4c4a-9bec-6dc59efb3223.mp4
 
 * TODO item tracking in projects
 * Custom item tracking under \<warning> tag
@@ -26,7 +30,7 @@ https://user-images.githubusercontent.com/44241490/203454247-2d7f717e-de4d-4c4a-
 
 ## Release Notes
 
-### 1.0.0
+### 1.0.1
 
 Initial release of minimalTODO
 
