@@ -25,12 +25,3 @@ MinimalTODO is a utility that keeps an eye on TODO items in your project. It can
 
 * Ripgrep - "Searching of keywords in projects."
 * git - "If you wish to use Modified files scan mode."
-
----
-
-## Release Notes
-
-### 1.0.1
-
-Initial release of minimalTODO
-

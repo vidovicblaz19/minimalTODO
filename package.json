@@ -2,7 +2,7 @@
   "name": "minimaltodo",
   "displayName": "minimalTODO",
   "description": "TODO utility that keeps track of todos in your files.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "vidovichb",
   "license": "MIT",
   "repository": {
@@ -16,6 +16,11 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "todo",
+    "task",
+    "snippet watcher"
+  ],
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -27,8 +32,8 @@
         "minimaltodo.general.todoIdentifiers": {
           "type": "array",
           "default": [
-            "//TODO",
-            "//Todo"
+            "TODO",
+            "Todo"
           ],
           "description": "Words that help identify todo lines. Example: [\"TODO\", ...],"
         },

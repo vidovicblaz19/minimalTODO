@@ -102,7 +102,7 @@ export class MainStructureResolver {
             Current_File: 'Scan current file',
             Modified_Files: 'Scan modified files'
 
-        }
+        };
 
         this.mainTreeview.badge = { 
             tooltip: scanModeMapper[this.extensionStateStore.scanMode],
