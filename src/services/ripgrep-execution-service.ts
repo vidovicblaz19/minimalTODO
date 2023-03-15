@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import path = require("path");
 import { rgPath } from "@vscode/ripgrep";
 import { spawnSync, SpawnSyncOptionsWithStringEncoding } from "child_process";
@@ -9,7 +10,7 @@ export class RipgrepService {
     private readonly _options: string[];
     private readonly _regexPattern: string;
 
-    constructor(private extensionStateStore: ExtensionStateStore) {
+    constructor(private extensionStateStore: ExtensionStateStore, private outputChannel: vscode.OutputChannel) {
         this._options = ["--json"];
         this._regexPattern = [...this.extensionStateStore.todoIdentifiers, ...this.extensionStateStore.warningIdentifiers].join('|');
     }
@@ -27,9 +28,11 @@ export class RipgrepService {
         const rgSettings:SpawnSyncOptionsWithStringEncoding = { encoding:'utf-8', maxBuffer: 2000*1024 };
         rgSettings.cwd = (this.extensionStateStore.scanMode !== 'Current_File') ? cwd : undefined;
 
-        const ripgrep = spawnSync(rgPath, [...this._options, ...specificFileSearch, '--', this._regexPattern, cwd ], rgSettings);
-        if (ripgrep.status == null || ripgrep.status! > 1) {
-            throw new Error("Ripgrep crashed due to unexpected error.");
+        const args =  [...this._options, ...specificFileSearch, '--', this._regexPattern, cwd ];
+        const ripgrep = spawnSync(rgPath, args, rgSettings);
+        if ((ripgrep.status == null || ripgrep.status! > 1) && !ripgrep.stderr.endsWith('The system cannot find the file specified. (os error 2)\n')) {
+            this.outputChannel.appendLine(`Ripgrep crashed due to unexpected error while executing command:\n\t-> "${[rgPath, ...args].join(' ')}"\nAdditionalInfo:\n\t-> "${ripgrep.stderr}"`);
+            throw new Error(`Ripgrep crashed due to unexpected error. More info available on OUTPUT tab.`);
         }
         const _rawMatches = getLines(ripgrep.stdout)
             .map((line) => (JSON.parse(line)))
