@@ -6,12 +6,13 @@ import { RipgrepService } from './services/ripgrep-execution-service';
 import { ExtensionStateStore } from './store/extension-state-store';
 import { registerFileSystemWatcher, registerOnDidChangeVisibleTextEditorsWatcher, registerOnDidChangeWorkspaceFoldersWatcher, registerOnDidSaveTextDocumentWatcher } from './watchers/file-system-watcher';
 const extensionStateStore = new ExtensionStateStore();
+const outputChannel = vscode.window.createOutputChannel("minimalTODO");
 
 export async function activate(context: vscode.ExtensionContext) {
 	/**
 	 * [[ we initialize and inject dependencies ]]
 	 **/ 
-	const ripgrepService = new RipgrepService(extensionStateStore);
+	const ripgrepService = new RipgrepService(extensionStateStore, outputChannel);
 
 	const mainTreeviewProvider = new MainTreeviewProvider();
 
