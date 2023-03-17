@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import path = require("path");
-import { rgPath } from "@vscode/ripgrep";
+import { rgPath } from '../bin-wrappers/ripgrep-wrapper';
 import { spawnSync, SpawnSyncOptionsWithStringEncoding } from "child_process";
 import { IRipgrepRawMatch, IRipgrepSanitizedMatch } from "../interfaces-and-types.ts/execution-interfaces";
 import { ExtensionStateStore } from "../store/extension-state-store";
