@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { removeUnneededBinaries } from './bin-wrappers/ripgrep-wrapper';
 import { switchScanModeCommands, toggleViewModeCommand, treeItemClickedCommand } from './commands';
 import { MainStructureResolver } from './providers/main-tree-view-provider/main-structure-resolver';
 import { MainTreeviewProvider } from './providers/main-tree-view-provider/main-tree-view-provider';
@@ -9,6 +10,7 @@ const extensionStateStore = new ExtensionStateStore();
 const outputChannel = vscode.window.createOutputChannel("minimalTODO");
 
 export async function activate(context: vscode.ExtensionContext) {
+	removeUnneededBinaries();
 	/**
 	 * [[ we initialize and inject dependencies ]]
 	 **/ 
