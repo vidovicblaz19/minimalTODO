@@ -11,13 +11,13 @@ export class RipgrepService {
     private readonly _regexPattern: string;
 
     constructor(private extensionStateStore: ExtensionStateStore, private outputChannel: vscode.OutputChannel) {
-        this._options = ["--json"];
-        this._regexPattern = [...this.extensionStateStore.todoIdentifiers, ...this.extensionStateStore.warningIdentifiers].join('|');
+        this._options = ["--json", "--no-require-git"];
+        this._regexPattern = [...this.extensionStateStore.todoIdentifiers, ...this.extensionStateStore.warningIdentifiers].join('\|');
     }
 
     private findGitModifiedFiles(cwd:string): string[] {
         const includeUntracked = (this.extensionStateStore.gitModifiedIncludeUntracked) ? '-o' : '--';
-        const git = spawnSync('git',['ls-files', '--exclude-standard', '-m', includeUntracked],{cwd, encoding:'utf-8', maxBuffer: 2000*1024});
+        const git = spawnSync('git',['ls-files', '--exclude-standard', '-m', includeUntracked],{cwd, encoding:'utf-8', maxBuffer: 5*1024*1024});
         if(git.status !== 0) { return ['-g']; }
         return getLines(git.stdout).flatMap((line) => (['-g',`${line}`]));
     }
@@ -25,12 +25,12 @@ export class RipgrepService {
     public findMatches(dir: string): IRipgrepSanitizedMatch[] {
         const cwd = path.normalize(dir);
         const specificFileSearch = (this.extensionStateStore.scanMode === 'Modified_Files') ? this.findGitModifiedFiles(cwd) : [];
-        const rgSettings:SpawnSyncOptionsWithStringEncoding = { encoding:'utf-8', maxBuffer: 2000*1024 };
+        const rgSettings:SpawnSyncOptionsWithStringEncoding = { encoding:'utf-8', maxBuffer: 5*1024*1024 };
         rgSettings.cwd = (this.extensionStateStore.scanMode !== 'Current_File') ? cwd : undefined;
 
         const args =  [...this._options, ...specificFileSearch, '--', this._regexPattern, cwd ];
         const ripgrep = spawnSync(rgPath, args, rgSettings);
-        if ((ripgrep.status == null || ripgrep.status! > 1) && !ripgrep.stderr.endsWith('The system cannot find the file specified. (os error 2)\n')) {
+        if ((ripgrep.status == null || ripgrep.status > 1) && !ripgrep.stderr.includes('(os error 2)')) {
             this.outputChannel.appendLine(`Ripgrep crashed due to unexpected error while executing command:\n\t-> "${[rgPath, ...args].join(' ')}"\nAdditionalInfo:\n\t-> "${ripgrep.stderr}"`);
             throw new Error(`Ripgrep crashed due to unexpected error. More info available on OUTPUT tab.`);
         }

@@ -2,7 +2,7 @@
   "name": "minimaltodo",
   "displayName": "minimalTODO",
   "description": "TODO utility that keeps track of todos in your files.",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "publisher": "vidovichb",
   "license": "MIT",
   "repository": {

@@ -11,7 +11,6 @@ MinimalTODO is a utility that keeps an eye on TODO items in your project. It can
 
 ![feature-demo](preview/minimalTODO-demo.gif)
 
-
 * TODO item tracking in projects
 * Custom item tracking under \<warning> tag
 * Workspace scan mode
@@ -20,6 +19,7 @@ MinimalTODO is a utility that keeps an eye on TODO items in your project. It can
 * Simple list view of items
 * Tree view of items
 * Customization of TODO and Warning keywords through settings.
+* Skip directories defined in .gitignore or .ignore files.
 
 ## Dependencies
 
