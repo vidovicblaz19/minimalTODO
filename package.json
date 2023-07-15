@@ -2,12 +2,12 @@
   "name": "minimaltodo",
   "displayName": "minimalTODO",
   "description": "TODO utility that keeps track of todos in your files.",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "publisher": "vidovichb",
   "license": "MIT",
   "repository": {
 		"type": "git",
-		"url": "https://github.com/vidovichb/minimalTODO"
+		"url": "https://github.com/vidovicblaz19/minimalTODO"
 	},
   "icon": "resources/minimaltodo-icon-black.png",
   "engines": {
